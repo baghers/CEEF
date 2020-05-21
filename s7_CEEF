@@ -1,0 +1,1529 @@
+
+echo 1 > /sys/bus/i2c/drivers/INA231/0-0045/enable
+echo 1 > /sys/bus/i2c/drivers/INA231/0-0040/enable
+echo 1 > /sys/bus/i2c/drivers/INA231/0-0041/enable
+echo 1 > /sys/bus/i2c/drivers/INA231/0-0044/enable
+
+echo userspace >/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
+echo userspace >/sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+echo userspace >/sys/devices/system/cpu/cpu5/cpufreq/scaling_governor
+echo userspace >/sys/devices/system/cpu/cpu6/cpufreq/scaling_governor
+echo userspace >/sys/devices/system/cpu/cpu7/cpufreq/scaling_governor
+echo 2
+echo 1400000 >/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+echo 1400000 >/sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
+echo 1400000 >/sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
+echo 1400000 >/sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
+echo 2000000 >/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+echo 2000000 >/sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
+echo 2000000 >/sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
+echo 2000000 >/sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
+echo 3
+echo 1400000 >/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+echo 1400000 >/sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
+echo 1400000 >/sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
+echo 1400000 >/sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq
+echo 2000000 >/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+echo 2000000 >/sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
+echo 2000000 >/sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
+echo 2000000 >/sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
+echo 4
+cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq
+
+cnt=3
+while [ $cnt -lt 4 ]
+do	
+	if [ $cnt -eq 1 ]
+	then
+		rt0=188156 
+		rt1=160751
+		rt2=92563 
+		rt3=120528 
+		rt4=51877  
+		rt5=12436
+
+		avgips0=1799406948 
+		avgips1=1776460007  
+		avgips2=229857935  
+		avgips3=883221648  
+		avgips4=1221367950  
+		avgips5=1225674924  
+
+		eer0=1.02
+		eer1=1.27
+		eer2=1.80
+		eer3=1.12
+		eer4=1.08
+		eer5=1.30
+ 
+		appnae1="lbm_base.arm"
+		appnae2="leslie3d_base.arm"
+		appnae3="mcf_base.ArmLinuxGnuAbi-"
+		appnae4="perlbench_base.ArmLinuxGnuAbi-"
+		appnae5="omnetpp_base.arm"
+		appnae6="astar_base.arm"
+			
+		./spec/CPU2006/470.lbm/lbm_base.arm 30 spec/CPU2006/470.lbm/reference.dat 0 0 spec/CPU2006/470.lbm/100_100_130_ldc.of > spec/CPU2006/470.lbm/lbm.ref.out 2> spec/CPU2006/470.lbm/lbm.ref.err &		
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/437.leslie3d/leslie3d_base.arm < spec/CPU2006/437.leslie3d/leslie3d.in > spec/CPU2006/437.leslie3d/leslie3d.ref.out 2> spec/CPU2006/437.leslie3d/leslie3d.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/mcf_base.ArmLinuxGnuAbi- ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.in -o ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.out -e ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/473.astar/astar_base.arm spec/CPU2006/473.astar/lake.cfg > spec/CPU2006/473.astar/astar.out 2> spec/CPU2006/473.astar/astar.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 2 ]
+	then
+		rt0=63778
+		rt1=435498 
+		rt2=42445 
+		rt3=47497 
+		rt4=88130  
+		rt5=200896
+
+		avgips0=1214322619   
+		avgips1=1369214639  
+		avgips2=1380937043   
+		avgips3=1460850171   
+		avgips4=1475138112   
+		avgips5=1488867903  
+
+		eer0=1.31
+		eer1=1.25
+		eer2=1.09
+		eer3=0.96
+		eer4=0.97
+		eer5=1.08
+ 
+		appnae1="gobmk_base.arm"
+		appnae2="sjeng_base.arm"
+		appnae3="GemsFDTD_base.arm"
+		appnae4="povray_base.arm"
+		appnae5="milc_base.arm"
+		appnae6="cactusADM_base.arm"
+			
+		./spec/CPU2006/445.gobmk/gobmk_base.arm --quiet --mode gtp < spec/CPU2006/445.gobmk/dniwog.tst > spec/CPU2006/445.gobmk/gobmk.reff.score2.out 2> spec/CPU2006/445.gobmk/gobmk.ref.score2.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/458.sjeng/sjeng_base.arm spec/CPU2006/458.sjeng/ref.txt > spec/CPU2006/458.sjeng/sjeng.ref.out 2> spec/CPU2006/458.sjeng/sjeng.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/459.GemsFDTD/GemsFDTD_base.arm > spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.out 2> spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/433.milc/milc_base.arm < spec/CPU2006/433.milc/su3imp.in > spec/CPU2006/433.milc/milc.ref.out 2> spec/CPU2006/433.milc/milc.ref.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/436.cactusADM/cactusADM_base.arm spec/CPU2006/436.cactusADM/benchADM.par > spec/CPU2006/436.cactusADM/cactusADM.ref.out 2> spec/CPU2006/436.cactusADM/cactusADM.ref.err & 
+		t5=$(($(date +%s%N)/1000000))	
+	elif [ $cnt -eq 3 ]
+	then
+		rt0=66360
+		rt1=251564 
+		rt2=34253 
+		rt3=7139 
+		rt4=29643  
+		rt5=98751
+
+		avgips0=1543005401    
+		avgips1=1558655713   
+		avgips2=1612274795    
+		avgips3=1621213004    
+		avgips4=1621409626    
+		avgips5=1701625147   
+
+		eer0=1.26
+		eer1=0.97
+		eer2=0.96
+		eer3=1.30
+		eer4=1.06
+		eer5=1.05
+ 
+		appnae1="bzip2_base.ArmLinuxGnuAbi-"
+		appnae2="gamess_base.arm"
+		appnae3="calculix_base.arm"
+		appnae4="Xalan_base.arm"
+		appnae5="tonto_base.arm"
+		appnae6="zeusmp_base.arm"
+			
+		./spec/CPU2006/401.bzip2/run/run_base_ref_ArmLinuxGnuAbi-.0000/bzip2_base.ArmLinuxGnuAbi- ./spec/CPU2006/401.bzip2/run/run_base_ref_ArmLinuxGnuAbi-.0000/input.program &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/416.gamess/gamess_base.arm < spec/CPU2006/416.gamess/cytosine.2.config > gamess.ref.cytosine.out 2> gamess.ref.cytosine.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/454.calculix/calculix_base.arm -i stairs > calculix.ref.out 2> calculix.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/483.xalancbmk/Xalan_base.arm -v spec/CPU2006/483.xalancbmk/test.xml spec/CPU2006/483.xalancbmk/xalanc.xsl &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/465.tonto/tonto_base.arm > spec/CPU2006/465.tonto/tonto.ref.out 2> spec/CPU2006/465.tonto/tonto.ref.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/434.zeusmp/zeusmp_base.arm > zeusmp.ref.out 2> zeusmp.ref.err & 
+		t5=$(($(date +%s%N)/1000000))	
+	elif [ $cnt -eq 4 ]
+	then
+		rt0=34848
+		rt1=139759 
+		rt2=214224 
+		rt3=191415 
+		rt4=92563  
+		rt5=120528
+
+		avgips0=1905759519     
+		avgips1=1934815242    
+		avgips2=1080145489      
+		avgips3=1206609988      
+		avgips4=229857935     
+		avgips5=883221648    
+
+		eer0=2.12
+		eer1=1.27
+		eer2=1.13
+		eer3=1.31
+		eer4=1.80
+		eer5=1.12
+ 
+		appnae1="libquantum_base.arm"
+		appnae2="h264ref_base.ArmLinuxGnuAbi-"
+		appnae3="gcc_base.arm"
+		appnae4="soplex_base.arm"
+		appnae5="mcf_base.ArmLinuxGnuAbi-"
+		appnae6="perlbench_base.ArmLinuxGnuAbi-"
+			
+		./spec/CPU2006/462.libquantum/libquantum_base.arm 250 8 > spec/CPU2006/462.libquantum/libquantum.ref.out 2> spec/CPU2006/462.libquantum/libquantum.ref.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/h264ref_base.ArmLinuxGnuAbi- -d ./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/foreman_ref_encoder_main.cfg &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/403.gcc/gcc_base.arm spec/CPU2006/403.gcc/200.i -o spec/CPU2006/403.gcc/200.s > spec/CPU2006/403.gcc/gcc.ref.200.out 2> spec/CPU2006/403.gcc/gcc.ref.200.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/450.soplex/soplex_base.arm -s1 -e -m15000 spec/CPU2006/450.soplex/pds-20.mps > spec/CPU2006/450.soplex/soplex.ref.pds-20.out 2> spec/CPU2006/450.soplex/soplex.ref.pds20.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/mcf_base.ArmLinuxGnuAbi- ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.in -o ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.out -e ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 5 ]
+	then
+		rt0=160751
+		rt1=98751 
+		rt2=188156 
+		rt3=210945 
+		rt4=47497  
+		rt5=120528
+
+		avgips0=1776460007      
+		avgips1=1701625147     
+		avgips2=1799406948       
+		avgips3=1880393579       
+		avgips4=1460850171      
+		avgips5=883221648     
+
+		eer0=1.27
+		eer1=1.05
+		eer2=1.02
+		eer3=1.04
+		eer4=0.96
+		eer5=1.12
+ 
+		appnae1="leslie3d_base.arm"
+		appnae2="zeusmp_base.arm"
+		appnae3="lbm_base.arm"
+		appnae4="hmmer_base.ArmLinuxGnuAbi-"
+		appnae5="povray_base.arm"
+		appnae6="perlbench_base.ArmLinuxGnuAbi-"
+			
+		./spec/CPU2006/437.leslie3d/leslie3d_base.arm < spec/CPU2006/437.leslie3d/leslie3d.in > spec/CPU2006/437.leslie3d/leslie3d.ref.out 2> spec/CPU2006/437.leslie3d/leslie3d.ref.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/434.zeusmp/zeusmp_base.arm > zeusmp.ref.out 2> zeusmp.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/470.lbm/lbm_base.arm 30 spec/CPU2006/470.lbm/reference.dat 0 0 spec/CPU2006/470.lbm/100_100_130_ldc.of > spec/CPU2006/470.lbm/lbm.ref.out 2> spec/CPU2006/470.lbm/lbm.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/456.hmmer/run/run_base_ref_ArmLinuxGnuAbi-.0000/hmmer_base.ArmLinuxGnuAbi-  --num 50000 ./spec/CPU2006/456.hmmer/run/run_base_ref_ArmLinuxGnuAbi-.0000/nph3.hmm &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 6 ]
+	then
+		rt0=40342
+		rt1=127320 
+		rt2=160751 
+		rt3=98751 
+		rt4=188156  
+		rt5=120528
+
+		avgips0=1761880491       
+		avgips1=1775008158      
+		avgips2=1776460007        
+		avgips3=1701625147        
+		avgips4=1799406948       
+		avgips5=883221648      
+
+		eer0=0.91
+		eer1=1.12
+		eer2=1.27
+		eer3=1.05
+		eer4=1.02
+		eer5=1.12
+ 
+		appnae1="gromacs"
+		appnae2="bwaves_base.arm"
+		appnae3="leslie3d_base.arm"
+		appnae4="zeusmp_base.arm"
+		appnae5="lbm_base.arm"
+		appnae6="perlbench_base.ArmLinuxGnuAbi-"
+			
+		./spec/CPU2006/435.gromacs/gromacs -silent -deffnm gromacs -nice 0 > gromacs.ref.out 2> gromacs.ref.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/410.bwaves/bwaves_base.arm bwaves.in > bwaves.out 2> bwaves.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/437.leslie3d/leslie3d_base.arm < spec/CPU2006/437.leslie3d/leslie3d.in > spec/CPU2006/437.leslie3d/leslie3d.ref.out 2> spec/CPU2006/437.leslie3d/leslie3d.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/434.zeusmp/zeusmp_base.arm > zeusmp.ref.out 2> zeusmp.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/470.lbm/lbm_base.arm 30 spec/CPU2006/470.lbm/reference.dat 0 0 spec/CPU2006/470.lbm/100_100_130_ldc.of > spec/CPU2006/470.lbm/lbm.ref.out 2> spec/CPU2006/470.lbm/lbm.ref.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err & 
+		t5=$(($(date +%s%N)/1000000))	
+	elif [ $cnt -eq 7 ]
+	then
+		rt0=210945
+		rt1=34848 
+		rt2=139759 
+		rt3=47497 
+		rt4=88130  
+		rt5=200896
+
+		avgips0=1880393579        
+		avgips1=1905759519       
+		avgips2=1934815242         
+		avgips3=1460850171         
+		avgips4=1475138112        
+		avgips5=1488867903       
+
+		eer0=1.04
+		eer1=2.12
+		eer2=1.27
+		eer3=0.96
+		eer4=0.97
+		eer5=1.08
+ 
+		appnae1="hmmer_base.ArmLinuxGnuAbi-"
+		appnae2="libquantum_base.arm"
+		appnae3="h264ref_base.ArmLinuxGnuAbi-"
+		appnae4="povray_base.arm"
+		appnae5="milc_base.arm"
+		appnae6="cactusADM_base.arm"
+			
+		./spec/CPU2006/456.hmmer/run/run_base_ref_ArmLinuxGnuAbi-.0000/hmmer_base.ArmLinuxGnuAbi-  --num 50000 ./spec/CPU2006/456.hmmer/run/run_base_ref_ArmLinuxGnuAbi-.0000/nph3.hmm &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/462.libquantum/libquantum_base.arm 250 8 > spec/CPU2006/462.libquantum/libquantum.ref.out 2> spec/CPU2006/462.libquantum/libquantum.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/h264ref_base.ArmLinuxGnuAbi- -d ./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/foreman_ref_encoder_main.cfg &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/433.milc/milc_base.arm < spec/CPU2006/433.milc/su3imp.in > spec/CPU2006/433.milc/milc.ref.out 2> spec/CPU2006/433.milc/milc.ref.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/436.cactusADM/cactusADM_base.arm spec/CPU2006/436.cactusADM/benchADM.par > spec/CPU2006/436.cactusADM/cactusADM.ref.out 2> spec/CPU2006/436.cactusADM/cactusADM.ref.err & 
+		t5=$(($(date +%s%N)/1000000))	
+	elif [ $cnt -eq 8 ]
+	then
+		rt0=7139
+		rt1=191415 
+		rt2=42445 
+		rt3=47497 
+		rt4=88130  
+		rt5=120528
+
+		avgips0=1621213004         
+		avgips1=1206609988        
+		avgips2=1380937043          
+		avgips3=1460850171         
+		avgips4=1475138112        
+		avgips5=883221648        
+
+		eer0=1.30
+		eer1=1.31
+		eer2=1.09
+		eer3=0.96
+		eer4=0.97
+		eer5=1.12
+ 
+		appnae1="Xalan_base.arm"
+		appnae2="soplex_base.arm"
+		appnae3="GemsFDTD_base.arm"
+		appnae4="povray_base.arm"
+		appnae5="milc_base.arm"
+		appnae6="perlbench_base.ArmLinuxGnuAbi-"
+			
+		./spec/CPU2006/483.xalancbmk/Xalan_base.arm -v spec/CPU2006/483.xalancbmk/test.xml spec/CPU2006/483.xalancbmk/xalanc.xsl &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/450.soplex/soplex_base.arm -s1 -e -m15000 spec/CPU2006/450.soplex/pds-20.mps > spec/CPU2006/450.soplex/soplex.ref.pds-20.out 2> spec/CPU2006/450.soplex/soplex.ref.pds20.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/459.GemsFDTD/GemsFDTD_base.arm > spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.out 2> spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/433.milc/milc_base.arm < spec/CPU2006/433.milc/su3imp.in > spec/CPU2006/433.milc/milc.ref.out 2> spec/CPU2006/433.milc/milc.ref.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 9 ]
+	then
+		rt0=42445
+		rt1=47497 
+		rt2=88130 
+		rt3=51877 
+		rt4=92563  
+		rt5=120528
+
+		avgips0=1380937043          
+		avgips1=1460850171         
+		avgips2=1475138112           
+		avgips3=1221367950          
+		avgips4=229857935         
+		avgips5=883221648         
+
+		eer0=1.09
+		eer1=0.96
+		eer2=0.97
+		eer3=1.08
+		eer4=1.80
+		eer5=1.12
+ 
+		appnae1="GemsFDTD_base.arm"
+		appnae2="povray_base.arm"
+		appnae3="milc_base.arm"
+		appnae4="omnetpp_base.arm"
+		appnae5="mcf_base.ArmLinuxGnuAbi-"
+		appnae6="perlbench_base.ArmLinuxGnuAbi-"
+			
+		./spec/CPU2006/459.GemsFDTD/GemsFDTD_base.arm > spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.out 2> spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/433.milc/milc_base.arm < spec/CPU2006/433.milc/su3imp.in > spec/CPU2006/433.milc/milc.ref.out 2> spec/CPU2006/433.milc/milc.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/mcf_base.ArmLinuxGnuAbi- ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.in -o ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.out -e ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 10 ]
+	then
+		rt0=200896
+		rt1=42445 
+		rt2=47497 
+		rt3=88130 
+		rt4=120528  
+		rt5=51877
+
+		avgips0=1488867903           
+		avgips1=1380937043          
+		avgips2=1460850171            
+		avgips3=1475138112           
+		avgips4=883221648          
+		avgips5=1221367950          
+
+		eer0=1.08
+		eer1=1.09
+		eer2=0.96
+		eer3=0.97
+		eer4=1.12
+		eer5=1.08
+ 
+		appnae1="cactusADM_base.arm"
+		appnae2="GemsFDTD_base.arm"
+		appnae3="povray_base.arm"
+		appnae4="milc_base.arm"
+		appnae5="perlbench_base.ArmLinuxGnuAbi-"
+		appnae6="omnetpp_base.arm"
+			
+		./spec/CPU2006/436.cactusADM/cactusADM_base.arm spec/CPU2006/436.cactusADM/benchADM.par > spec/CPU2006/436.cactusADM/cactusADM.ref.out 2> spec/CPU2006/436.cactusADM/cactusADM.ref.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/459.GemsFDTD/GemsFDTD_base.arm > spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.out 2> spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/433.milc/milc_base.arm < spec/CPU2006/433.milc/su3imp.in > spec/CPU2006/433.milc/milc.ref.out 2> spec/CPU2006/433.milc/milc.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 11 ]
+	then
+		rt0=191415
+		rt1=42445 
+		rt2=47497 
+		rt3=88130 
+		rt4=200896 
+		rt5=51877
+
+		avgips0=1206609988            
+		avgips1=1380937043          
+		avgips2=1460850171            
+		avgips3=1475138112           
+		avgips4=1488867903           
+		avgips5=1221367950           
+
+		eer0=1.31
+		eer1=1.09
+		eer2=0.96
+		eer3=0.97
+		eer4=1.08
+		eer5=1.08
+ 
+		appnae1="soplex_base.arm"
+		appnae2="GemsFDTD_base.arm"
+		appnae3="povray_base.arm"
+		appnae4="milc_base.arm"
+		appnae5="cactusADM_base.arm"
+		appnae6="omnetpp_base.arm"
+			
+		./spec/CPU2006/450.soplex/soplex_base.arm -s1 -e -m15000 spec/CPU2006/450.soplex/pds-20.mps > spec/CPU2006/450.soplex/soplex.ref.pds-20.out 2> spec/CPU2006/450.soplex/soplex.ref.pds20.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/459.GemsFDTD/GemsFDTD_base.arm > spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.out 2> spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/433.milc/milc_base.arm < spec/CPU2006/433.milc/su3imp.in > spec/CPU2006/433.milc/milc.ref.out 2> spec/CPU2006/433.milc/milc.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/436.cactusADM/cactusADM_base.arm spec/CPU2006/436.cactusADM/benchADM.par > spec/CPU2006/436.cactusADM/cactusADM.ref.out 2> spec/CPU2006/436.cactusADM/cactusADM.ref.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 12 ]
+	then
+		rt0=214224
+		rt1=191415 
+		rt2=51877 
+		rt3=12436 
+		rt4=92563 
+		rt5=120528
+
+		avgips0=1080145489             
+		avgips1=1206609988           
+		avgips2=1221367950             
+		avgips3=1225674924            
+		avgips4=229857935            
+		avgips5=883221648            
+
+		eer0=1.13
+		eer1=1.31
+		eer2=1.08
+		eer3=1.30
+		eer4=1.80
+		eer5=1.12
+ 
+		appnae1="gcc_base.arm"
+		appnae2="soplex_base.arm"
+		appnae3="omnetpp_base.arm"
+		appnae4="astar_base.arm"
+		appnae5="mcf_base.ArmLinuxGnuAbi-"
+		appnae6="perlbench_base.ArmLinuxGnuAbi-"
+			
+		./spec/CPU2006/403.gcc/gcc_base.arm spec/CPU2006/403.gcc/200.i -o spec/CPU2006/403.gcc/200.s > spec/CPU2006/403.gcc/gcc.ref.200.out 2> spec/CPU2006/403.gcc/gcc.ref.200.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/450.soplex/soplex_base.arm -s1 -e -m15000 spec/CPU2006/450.soplex/pds-20.mps > spec/CPU2006/450.soplex/soplex.ref.pds-20.out 2> spec/CPU2006/450.soplex/soplex.ref.pds20.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/473.astar/astar_base.arm spec/CPU2006/473.astar/lake.cfg > spec/CPU2006/473.astar/astar.out 2> spec/CPU2006/473.astar/astar.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/mcf_base.ArmLinuxGnuAbi- ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.in -o ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.out -e ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 13 ]
+	then
+		rt0=63778
+		rt1=127320 
+		rt2=12436 
+		rt3=92563 
+		rt4=120528 
+		rt5=51877
+
+		avgips0=1214322619              
+		avgips1=1775008158           
+		avgips2=1225674924             
+		avgips3=229857935            
+		avgips4=883221648            
+		avgips5=1221367950             
+
+		eer0=1.31
+		eer1=1.12
+		eer2=1.30
+		eer3=1.80
+		eer4=1.12
+		eer5=1.08
+ 
+		appnae1="gobmk_base.arm"
+		appnae2="bwaves_base.arm"
+		appnae3="astar_base.arm"
+		appnae4="mcf_base.ArmLinuxGnuAbi-"
+		appnae5="perlbench_base.ArmLinuxGnuAbi-"
+		appnae6="omnetpp_base.arm"
+			
+		./spec/CPU2006/445.gobmk/gobmk_base.arm --quiet --mode gtp < spec/CPU2006/445.gobmk/dniwog.tst > spec/CPU2006/445.gobmk/gobmk.reff.score2.out 2> spec/CPU2006/445.gobmk/gobmk.ref.score2.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/410.bwaves/bwaves_base.arm bwaves.in > bwaves.out 2> bwaves.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/473.astar/astar_base.arm spec/CPU2006/473.astar/lake.cfg > spec/CPU2006/473.astar/astar.out 2> spec/CPU2006/473.astar/astar.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/mcf_base.ArmLinuxGnuAbi- ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.in -o ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.out -e ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 14 ]
+	then
+		rt0=160751
+		rt1=720325 
+		rt2=188156 
+		rt3=120528 
+		rt4=51877 
+		rt5=92563
+
+		avgips0=1776460007               
+		avgips1=1795699576            
+		avgips2=1799406948              
+		avgips3=883221648             
+		avgips4=1221367950             
+		avgips5=229857935              
+
+		eer0=1.27
+		eer1=1.04
+		eer2=1.02
+		eer3=1.12
+		eer4=1.08
+		eer5=1.80
+ 
+		appnae1="leslie3d_base.arm"
+		appnae2="namd_base.arm"
+		appnae3="lbm_base.arm"
+		appnae4="perlbench_base.ArmLinuxGnuAbi-"
+		appnae5="omnetpp_base.arm"
+		appnae6="mcf_base.ArmLinuxGnuAbi-"
+			
+		./spec/CPU2006/437.leslie3d/leslie3d_base.arm < spec/CPU2006/437.leslie3d/leslie3d.in > spec/CPU2006/437.leslie3d/leslie3d.ref.out 2> spec/CPU2006/437.leslie3d/leslie3d.ref.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/444.namd/namd_base.arm --input spec/CPU2006/444.namd/namd.input --iterations 1 --output spec/CPU2006/444.namd/namd.out > spec/CPU2006/444.namd/namd.ref.out 2> spec/CPU2006/444.namd/namd.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/470.lbm/lbm_base.arm 30 spec/CPU2006/470.lbm/reference.dat 0 0 spec/CPU2006/470.lbm/100_100_130_ldc.of > spec/CPU2006/470.lbm/lbm.ref.out 2> spec/CPU2006/470.lbm/lbm.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/mcf_base.ArmLinuxGnuAbi- ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.in -o ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.out -e ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 15 ]
+	then
+		rt0=40342
+		rt1=127320 
+		rt2=51877 
+		rt3=12436 
+		rt4=92563 
+		rt5=120528
+
+		avgips0=1761880491              
+		avgips1=1775008158           
+		avgips2=1221367950             
+		avgips3=1225674924            
+		avgips4=229857935            
+		avgips5=883221648            
+
+		eer0=0.91
+		eer1=1.13
+		eer2=1.08
+		eer3=1.30
+		eer4=1.80
+		eer5=1.12
+ 
+		appnae1="gromacs"
+		appnae2="bwaves_base.arm"
+		appnae3="omnetpp_base.arm"
+		appnae4="astar_base.arm"
+		appnae5="mcf_base.ArmLinuxGnuAbi-"
+		appnae6="perlbench_base.ArmLinuxGnuAbi-"
+			
+		./spec/CPU2006/435.gromacs/gromacs -silent -deffnm gromacs -nice 0 > gromacs.ref.out 2> gromacs.ref.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/410.bwaves/bwaves_base.arm bwaves.in > bwaves.out 2> bwaves.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/473.astar/astar_base.arm spec/CPU2006/473.astar/lake.cfg > spec/CPU2006/473.astar/astar.out 2> spec/CPU2006/473.astar/astar.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/mcf_base.ArmLinuxGnuAbi- ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.in -o ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.out -e ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 16 ]
+	then
+		rt0=47497
+		rt1=42445 
+		rt2=40342 
+		rt3=127320 
+		rt4=34253 
+		rt5=29643
+
+		avgips0=1460850171              
+		avgips1=1380937043           
+		avgips2=1761880491             
+		avgips3=1775008158            
+		avgips4=1612274795            
+		avgips5=1621409626            
+
+		eer0=0.96
+		eer1=1.09
+		eer2=0.91
+		eer3=1.13
+		eer4=0.96
+		eer5=1.06
+ 
+		appnae1="povray_base.arm"
+		appnae2="GemsFDTD_base.arm"
+		appnae3="gromacs"
+		appnae4="bwaves_base.arm"
+		appnae5="calculix_base.arm"
+		appnae6="tonto_base.arm"
+			
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/459.GemsFDTD/GemsFDTD_base.arm > spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.out 2> spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/435.gromacs/gromacs -silent -deffnm gromacs -nice 0 > gromacs.ref.out 2> gromacs.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/410.bwaves/bwaves_base.arm bwaves.in > bwaves.out 2> bwaves.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/454.calculix/calculix_base.arm -i stairs > calculix.ref.out 2> calculix.ref.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/465.tonto/tonto_base.arm > spec/CPU2006/465.tonto/tonto.ref.out 2> spec/CPU2006/465.tonto/tonto.ref.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 17 ]
+	then
+		rt0=29643
+		rt1=47497
+		rt2=127320
+		rt3=40342 
+		rt4=34848  
+		rt5=34253 
+           
+		avgips0=1621409626 
+		avgips1=1460850171              
+		avgips2=1775008158    
+		avgips3=1761880491             
+		avgips4=1905759519                   
+		avgips5=1612274795            
+
+		eer0=1.06
+		eer1=0.96
+		eer2=1.13
+		eer3=0.91
+		eer4=2.12
+		eer5=0.96
+ 
+		appnae1="omnetpp_base.arm"
+		appnae2="povray_base.arm"
+		appnae3="bwaves_base.arm"
+		appnae4="gromacs"
+		appnae5="libquantum_base.arm"
+		appnae6="calculix_base.arm"
+		
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err & 
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/410.bwaves/bwaves_base.arm bwaves.in > bwaves.out 2> bwaves.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/435.gromacs/gromacs -silent -deffnm gromacs -nice 0 > gromacs.ref.out 2> gromacs.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/462.libquantum/libquantum_base.arm 250 8 > spec/CPU2006/462.libquantum/libquantum.ref.out 2> spec/CPU2006/462.libquantum/libquantum.ref.err &
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/454.calculix/calculix_base.arm -i stairs > calculix.ref.out 2> calculix.ref.err & 
+		t5=$(($(date +%s%N)/1000000))		
+	elif [ $cnt -eq 18 ]
+	then
+		rt0=63778
+		rt1=29643
+		rt2=47497
+		rt3=42445
+		rt4=40342
+		rt5=127320  
+           
+		avgips0=1214322619
+		avgips1=1621409626 
+		avgips2=1460850171              
+		avgips3=1380937043    
+		avgips4=1761880491 
+		avgips5=1775008158           
+
+		eer0=1.31
+		eer1=1.06
+		eer2=0.96
+		eer3=1.09	
+		eer4=0.91
+		eer5=1.13
+ 
+		appnae1="gobmk_base.arm"
+		appnae2="omnetpp_base.arm"
+		appnae3="povray_base.arm"
+		appnae4="GemsFDTD_base.arm"
+		appnae5="gromacs"
+		appnae6="bwaves_base.arm"
+		
+		./spec/CPU2006/445.gobmk/gobmk_base.arm --quiet --mode gtp < spec/CPU2006/445.gobmk/dniwog.tst > spec/CPU2006/445.gobmk/gobmk.reff.score2.out 2> spec/CPU2006/445.gobmk/gobmk.ref.score2.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err & 
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/459.GemsFDTD/GemsFDTD_base.arm > spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.out 2> spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/435.gromacs/gromacs -silent -deffnm gromacs -nice 0 > gromacs.ref.out 2> gromacs.ref.err &
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/410.bwaves/bwaves_base.arm bwaves.in > bwaves.out 2> bwaves.ref.err &
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 19 ]
+	then
+		rt0=66360
+		rt1=63778
+		rt2=29643
+		rt3=47497
+		rt4=42445
+		rt5=40342
+        
+		avgips0=1543005401   
+		avgips1=1214322619
+		avgips2=1621409626 
+		avgips3=1460850171              
+		avgips4=1380937043    
+		avgips5=1761880491           
+
+		eer0=1.26
+		eer1=1.31
+		eer2=1.06
+		eer3=0.96
+		eer4=1.09	
+		eer5=0.91
+ 
+		appnae1="bzip2_base.ArmLinuxGnuAbi-"
+		appnae2="gobmk_base.arm"
+		appnae3="omnetpp_base.arm"
+		appnae4="povray_base.arm"
+		appnae5="GemsFDTD_base.arm"
+		appnae6="gromacs"
+		
+		./spec/CPU2006/401.bzip2/run/run_base_ref_ArmLinuxGnuAbi-.0000/bzip2_base.ArmLinuxGnuAbi- ./spec/CPU2006/401.bzip2/run/run_base_ref_ArmLinuxGnuAbi-.0000/input.program &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/445.gobmk/gobmk_base.arm --quiet --mode gtp < spec/CPU2006/445.gobmk/dniwog.tst > spec/CPU2006/445.gobmk/gobmk.reff.score2.out 2> spec/CPU2006/445.gobmk/gobmk.ref.score2.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err & 
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/459.GemsFDTD/GemsFDTD_base.arm > spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.out 2> spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.err &
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/435.gromacs/gromacs -silent -deffnm gromacs -nice 0 > gromacs.ref.out 2> gromacs.ref.err &
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 20 ]
+	then
+		rt0=88130
+		rt1=66360
+		rt2=63778
+		rt3=29643
+		rt4=47497
+		rt5=42445
+        
+		avgips0=1475138112
+		avgips1=1543005401   
+		avgips2=1214322619
+		avgips3=1621409626 
+		avgips4=1460850171              
+		avgips5=1380937043           
+
+		eer0=0.97
+		eer1=1.26
+		eer2=1.31
+		eer3=1.06
+		eer4=0.96
+		eer5=1.09	
+ 
+		appnae1="milc_base.arm"
+		appnae2="bzip2_base.ArmLinuxGnuAbi-"
+		appnae3="gobmk_base.arm"
+		appnae4="omnetpp_base.arm"
+		appnae5="povray_base.arm"
+		appnae6="GemsFDTD_base.arm"
+		
+		./spec/CPU2006/433.milc/milc_base.arm < spec/CPU2006/433.milc/su3imp.in > spec/CPU2006/433.milc/milc.ref.out 2> spec/CPU2006/433.milc/milc.ref.err & 
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/401.bzip2/run/run_base_ref_ArmLinuxGnuAbi-.0000/bzip2_base.ArmLinuxGnuAbi- ./spec/CPU2006/401.bzip2/run/run_base_ref_ArmLinuxGnuAbi-.0000/input.program &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/445.gobmk/gobmk_base.arm --quiet --mode gtp < spec/CPU2006/445.gobmk/dniwog.tst > spec/CPU2006/445.gobmk/gobmk.reff.score2.out 2> spec/CPU2006/445.gobmk/gobmk.ref.score2.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/471.omnetpp/omnetpp_base.arm spec/CPU2006/471.omnetpp/omnetpp.ini > spec/CPU2006/471.omnetpp/omnetpp.ref.log 2> spec/CPU2006/471.omnetpp/omnpp.ref.err & 
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/453.povray/povray_base.arm spec/CPU2006/453.povray/SPEC-benchmark-ref.ini > povray.ref.out 2> povray.ref.err &
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/459.GemsFDTD/GemsFDTD_base.arm > spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.out 2> spec/CPU2006/459.GemsFDTD/GemsFDTD.ref.err &
+		t5=$(($(date +%s%N)/1000000))				
+	elif [ $cnt -eq 21 ]
+	then
+		rt0=139759
+		rt1=127320 
+		rt2=120528  
+		rt3=98751 
+		rt4=92563  
+		rt5=88130 
+        
+		avgips0=1934815242      
+		avgips1=1775008158           
+		avgips2=883221648        
+		avgips3=1701625147      
+		avgips4=229857935 
+		avgips5=1475138112
+
+		eer0=1.27
+		eer1=1.12
+		eer2=1.12
+		eer3=1.05
+		eer4=1.80
+		eer5=0.97
+
+		appnae1="h264ref_base.ArmLinuxGnuAbi-"
+		appnae2="bwaves_base.arm"
+		appnae3="perlbench_base.ArmLinuxGnuAbi-"
+		appnae4="zeusmp_base.arm"
+		appnae5="mcf_base.ArmLinuxGnuAbi-"
+		appnae6="milc_base.arm"
+		
+		./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/h264ref_base.ArmLinuxGnuAbi- -d ./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/foreman_ref_encoder_main.cfg & 
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/410.bwaves/bwaves_base.arm bwaves.in > bwaves.out 2> bwaves.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/434.zeusmp/zeusmp_base.arm > zeusmp.ref.out 2> zeusmp.ref.err & 
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/mcf_base.ArmLinuxGnuAbi- ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.in -o ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.out -e ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.err &
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/433.milc/milc_base.arm < spec/CPU2006/433.milc/su3imp.in > spec/CPU2006/433.milc/milc.ref.out 2> spec/CPU2006/433.milc/milc.ref.err &
+		t5=$(($(date +%s%N)/1000000))	
+	elif [ $cnt -eq 22 ]
+	then
+		rt0=160751
+		rt1=139759
+		rt2=127320 
+		rt3=120528  
+		rt4=98751 
+		rt5=92563 
+        
+		avgips0=1776460007
+		avgips1=1934815242      
+		avgips2=1775008158           
+		avgips3=883221648        
+		avgips4=1701625147      
+		avgips5=229857935 
+
+		eer0=1.27
+		eer1=1.27
+		eer2=1.12
+		eer3=1.12
+		eer4=1.05
+		eer5=1.80
+
+		appnae1="leslie3d_base.arm"
+		appnae2="h264ref_base.ArmLinuxGnuAbi-"
+		appnae3="bwaves_base.arm"
+		appnae4="perlbench_base.ArmLinuxGnuAbi-"
+		appnae5="zeusmp_base.arm"
+		appnae6="mcf_base.ArmLinuxGnuAbi-"
+		
+		./spec/CPU2006/437.leslie3d/leslie3d_base.arm < spec/CPU2006/437.leslie3d/leslie3d.in > spec/CPU2006/437.leslie3d/leslie3d.ref.out 2> spec/CPU2006/437.leslie3d/leslie3d.ref.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/h264ref_base.ArmLinuxGnuAbi- -d ./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/foreman_ref_encoder_main.cfg & 
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/410.bwaves/bwaves_base.arm bwaves.in > bwaves.out 2> bwaves.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/434.zeusmp/zeusmp_base.arm > zeusmp.ref.out 2> zeusmp.ref.err & 
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/mcf_base.ArmLinuxGnuAbi- ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.in -o ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.out -e ./spec/CPU2006/429.mcf/run/run_base_ref_ArmLinuxGnuAbi-.0000/inp.err &
+		t5=$(($(date +%s%N)/1000000))	
+	elif [ $cnt -eq 23 ]
+	then
+		rt0=188156 
+		rt1=160751
+		rt2=139759
+		rt3=127320 
+		rt4=120528  
+		rt5=98751 
+        
+		avgips0=1799406948 
+		avgips1=1776460007
+		avgips2=1934815242      
+		avgips3=1775008158           
+		avgips4=883221648        
+		avgips5=1701625147
+
+		eer0=1.02
+		eer1=1.27
+		eer2=1.27
+		eer3=1.12
+		eer4=1.12
+		eer5=1.05
+
+		appnae1="lbm_base.arm"
+		appnae2="leslie3d_base.arm"
+		appnae3="h264ref_base.ArmLinuxGnuAbi-"
+		appnae4="bwaves_base.arm"
+		appnae5="perlbench_base.ArmLinuxGnuAbi-"
+		appnae6="zeusmp_base.arm"
+		
+		./spec/CPU2006/470.lbm/lbm_base.arm 30 spec/CPU2006/470.lbm/reference.dat 0 0 spec/CPU2006/470.lbm/100_100_130_ldc.of > spec/CPU2006/470.lbm/lbm.ref.out 2> spec/CPU2006/470.lbm/lbm.ref.err &		
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/437.leslie3d/leslie3d_base.arm < spec/CPU2006/437.leslie3d/leslie3d.in > spec/CPU2006/437.leslie3d/leslie3d.ref.out 2> spec/CPU2006/437.leslie3d/leslie3d.ref.err &
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/h264ref_base.ArmLinuxGnuAbi- -d ./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/foreman_ref_encoder_main.cfg & 
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/410.bwaves/bwaves_base.arm bwaves.in > bwaves.out 2> bwaves.ref.err &
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err &
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/434.zeusmp/zeusmp_base.arm > zeusmp.ref.out 2> zeusmp.ref.err & 
+		t5=$(($(date +%s%N)/1000000))
+	elif [ $cnt -eq 24 ]
+	then
+		rt0=191415 
+		rt1=188156 
+		rt2=160751
+		rt3=139759
+		rt4=127320 
+		rt5=120528 
+        
+		avgips0=1206609988
+		avgips1=1799406948 
+		avgips2=1776460007
+		avgips3=1934815242      
+		avgips4=1775008158           
+		avgips5=883221648 
+
+		eer0=1.31
+		eer1=1.02
+		eer2=1.27
+		eer3=1.27
+		eer4=1.12
+		eer5=1.12
+
+		appnae1="soplex_base.arm"
+		appnae2="lbm_base.arm"
+		appnae3="leslie3d_base.arm"
+		appnae4="h264ref_base.ArmLinuxGnuAbi-"
+		appnae5="bwaves_base.arm"
+		appnae6="perlbench_base.ArmLinuxGnuAbi-"
+		
+		./spec/CPU2006/450.soplex/soplex_base.arm -s1 -e -m15000 spec/CPU2006/450.soplex/pds-20.mps > spec/CPU2006/450.soplex/soplex.ref.pds-20.out 2> spec/CPU2006/450.soplex/soplex.ref.pds20.err &
+		t0=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/470.lbm/lbm_base.arm 30 spec/CPU2006/470.lbm/reference.dat 0 0 spec/CPU2006/470.lbm/100_100_130_ldc.of > spec/CPU2006/470.lbm/lbm.ref.out 2> spec/CPU2006/470.lbm/lbm.ref.err &		
+		t1=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/437.leslie3d/leslie3d_base.arm < spec/CPU2006/437.leslie3d/leslie3d.in > spec/CPU2006/437.leslie3d/leslie3d.ref.out 2> spec/CPU2006/437.leslie3d/leslie3d.ref.err &
+		t2=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/h264ref_base.ArmLinuxGnuAbi- -d ./spec/CPU2006/464.h264ref/run/run_base_ref_ArmLinuxGnuAbi-.0000/foreman_ref_encoder_main.cfg & 
+		t3=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/410.bwaves/bwaves_base.arm bwaves.in > bwaves.out 2> bwaves.ref.err &
+		t4=$(($(date +%s%N)/1000000))
+		./spec/CPU2006/400.perlbench/perlbench_base.ArmLinuxGnuAbi- -I./spec/CPU2006/400.perlbench/lib spec/CPU2006/400.perlbench/checkspam.pl 2500 5 25 11 150 1 1 1 1 > spec/CPU2006/400.perlbench/perlbench.ref.checkspam.out 2> spec/CPU2006/400.perlbench/perlbench.ref.checkspam.err &
+		t5=$(($(date +%s%N)/1000000))
+	fi
+	sleep 2s
+	pidarr[1]=$(pidof ${appnae1})
+	pidarr[2]=$(pidof ${appnae2})
+	pidarr[3]=$(pidof ${appnae3})
+	pidarr[4]=$(pidof ${appnae4})
+	pidarr[5]=$(pidof ${appnae5})
+	pidarr[6]=$(pidof ${appnae6})
+	taskset -cp 1 ${pidarr[1]}
+	taskset -cp 2 ${pidarr[2]}
+	taskset -cp 3 ${pidarr[3]}
+	taskset -cp 4 ${pidarr[4]}
+	taskset -cp 5 ${pidarr[5]}
+	taskset -cp 6 ${pidarr[6]}
+	sleep 1s
+	af[1]=1	
+	af[2]=2	
+	af[3]=3	
+	af[4]=4	
+	af[5]=5	
+	af[6]=6	
+
+	arrrt[${af[1]}]=$rt0
+	arrrt[${af[2]}]=$rt1
+	arrrt[${af[3]}]=$rt2
+	arrrt[${af[4]}]=$rt3
+	arrrt[${af[5]}]=$rt4
+	arrrt[${af[6]}]=$rt5
+
+	starttime[${af[1]}]="${t0}"
+	starttime[${af[2]}]="${t1}"
+	starttime[${af[3]}]="${t2}"
+	starttime[${af[4]}]="${t3}"
+	starttime[${af[5]}]="${t4}"
+	starttime[${af[6]}]="${t5}"
+
+	totaldur[${af[1]}]=0
+	totaldur[${af[2]}]=0
+	totaldur[${af[3]}]=0
+	totaldur[${af[4]}]=0
+	totaldur[${af[5]}]=0
+	totaldur[${af[6]}]=0
+
+	totalprogress[${af[1]}]=0
+	totalprogress[${af[2]}]=0
+	totalprogress[${af[3]}]=0
+	totalprogress[${af[4]}]=0
+	totalprogress[${af[5]}]=0
+	totalprogress[${af[6]}]=0
+
+	ipsalone[${af[1]}]=$avgips0
+	ipsalone[${af[2]}]=$avgips1
+	ipsalone[${af[3]}]=$avgips2
+	ipsalone[${af[4]}]=$avgips3
+	ipsalone[${af[5]}]=$avgips4
+	ipsalone[${af[6]}]=$avgips5
+
+	EDP=0
+	pcnt=6
+	curtedp=$(($(date +%s%N)/1000000))
+	while [ $pcnt -gt 0 ]
+	do	
+	eer[1]=-100
+	eer[2]=-100
+	eer[3]=-100
+	eer[4]=-100
+	eer[5]=-100
+	eer[6]=-100
+
+		pcnt=0
+		tcnt=1
+		while [ $tcnt -lt 7 ]
+		do
+			if  ps -p ${pidarr[tcnt]} > /dev/null; then
+				echo "pp ${pidarr[tcnt]}"
+				pcnt=$(( $pcnt + 1 ))
+				curt=$(($(date +%s%N)/1000000))
+				curraf=${af[tcnt]}
+
+
+				totaldur[tcnt]=$(($(( $curt - ${starttime[tcnt]} ))))
+				islittle=0
+				afg=$curraf
+				if [ $afg -eq 1 ] || [ $afg -eq 2 ] || [ $afg -eq 3 ] 
+				then
+					poutput=` perf stat -B -e armv7_cortex_a7/inst_retired/,LLC-load-misses -C $afg sleep 0.1 2>&1`
+					v7="armv7_cortex_a7/inst_retired/"
+					islittle=1
+				else
+					poutput=` perf stat -B -e armv7_cortex_a15/inst_retired/,LLC-load-misses -C $afg sleep 0.1 2>&1`
+					v7="armv7_cortex_a15/inst_retired/"
+					islittle=0
+				fi
+				v0="$afg':"
+				rest0=${poutput#*$v0}
+				rest7=${poutput#*$v7}
+				p7=$(( ${#poutput} - ${#rest7} - ${#v7} ))
+				instructions0b=$(echo ${poutput:(p7-20):20}| cut -d ' ' -f 2)
+				instructions0b="$(echo "${instructions0b//,}")"
+				totalinsl=$(( $instructions0b ))
+				if [ $islittle -eq 0 ]
+				then
+					ipsalone[tcnt]=$totalinsl
+				fi
+				totalprogress[tcnt]=$(echo "scale=5;${totalprogress[tcnt]} + $totalinsl / ${ipsalone[tcnt]}" | bc)
+				v0=$v7
+				v7="LLC-load-misses "
+				rest7=${poutput#*$v7}
+				p7=$(( ${#poutput} - ${#rest7} - ${#v7} ))
+				#echo "$p7 ${#poutput} ${#rest7} ${#v7}"	
+				instructions0b=$(echo ${poutput:(p7-20):20}| cut -d ' ' -f 2)
+				instructions0b="$(echo "${instructions0b//,}")"
+				#echo $instructions0b
+				totalLLCl=$(( $instructions0b ))
+				if [ $islittle -eq 1 ]
+				then
+					ipsl=$totalinsl
+					llcl=$totalLLCl
+					ipsb=$(echo "$ipsl * 1.657 + $llcl * 46.14 + 42870000" | bc)
+					llcb=$(echo "$llcl * 0.5741 - $ipsl * 0.000542 + 65370" | bc)
+				else
+					ipsb=$totalinsl
+					llcb=$totalLLCl
+					ipsl=$(echo "$ipsb * 0.4147 - $llcb * 24.25 + 16270000" | bc)
+					llcl=$(echo "$llcb * 0.5708 - $ipsb * 0.00001636 + 8088" | bc)
+				fi
+				pl=$(echo "$ipsb * 0.00000000002522 - $llcb * 0.00000005246 + 0.2799" | bc)
+				pb=$(echo "$ipsl * 0.0000000006711 + $llcl * 0.0000002218 + 2.419" | bc)
+				eer=$(echo "scale=5;$(echo "$ipsb * $pl" | bc) / $(echo "$ipsl * $pb" | bc)" | bc)
+				##eer=$(echo "scale=5;$(echo "$ipsb" | bc) / $(echo "$ipsl" | bc)" | bc)
+				eer[tcnt]=$eer
+				if (( $(echo "${totalprogress[tcnt]} >= 2" |bc -l) ))
+				then
+					stprog="$stprog 1"
+				else
+					stprog="$stprog ${totalprogress[tcnt]}"
+				fi
+			fi
+			
+			tcnt=$(( $tcnt + 1 ))
+		done	
+		stprog=" $pcnt $stprog"
+		echo "pure ${eer[1]} ${eer[2]} ${eer[3]} ${eer[4]} ${eer[5]} ${eer[6]}"
+		echo "pure ${pidarr[1]} ${pidarr[2]} ${pidarr[3]} ${pidarr[4]} ${pidarr[5]} ${pidarr[6]}"
+		echo "pure ${af[1]} ${af[2]} ${af[3]} ${af[4]} ${af[5]} ${af[6]}"
+
+		##########################sort
+		cc=5
+		while [ $cc -gt 0 ]
+		do
+			cc2=1
+			while [ $cc2 -le $cc ]
+			do
+				if (( $(echo "${eer[$cc2]} < ${eer[$(( $cc2 + 1 ))]}" |bc -l) ))
+				then
+					temp=${eer[$(( $cc2 + 1 ))]}
+					eer[$(( $cc2 + 1 ))]=${eer[$cc2]}					
+					eer[$cc2]=$temp	
+
+					temp=${af[$(( $cc2 + 1 ))]}
+					af[$(( $cc2 + 1 ))]=${af[$cc2]}
+					af[$cc2]=$temp
+
+					temp=${arrrt[$(( $cc2 + 1 ))]}
+					arrrt[$(( $cc2 + 1 ))]=${arrrt[$cc2]}
+					arrrt[$cc2]=$temp
+
+					temp=${starttime[$(( $cc2 + 1 ))]}
+					starttime[$(( $cc2 + 1 ))]=${starttime[$cc2]}
+					starttime[$cc2]=$temp
+
+					temp=${totaldur[$(( $cc2 + 1 ))]}
+					totaldur[$(( $cc2 + 1 ))]=${totaldur[$cc2]}
+					totaldur[$cc2]=$temp
+					
+					temp=${pidarr[$(( $cc2 + 1 ))]}
+					pidarr[$(( $cc2 + 1 ))]=${pidarr[$cc2]}
+					pidarr[$cc2]=$temp
+				fi
+				cc2=$(( $cc2 + 1 ))
+			done
+			cc=$(( $cc - 1 ))
+		done		
+		##########################
+		echo "sorted ${eer[1]} ${eer[2]} ${eer[3]} ${eer[4]} ${eer[5]} ${eer[6]}"
+		echo "sorted ${pidarr[1]} ${pidarr[2]} ${pidarr[3]} ${pidarr[4]} ${pidarr[5]} ${pidarr[6]}"
+		echo "sorted ${af[1]} ${af[2]} ${af[3]} ${af[4]} ${af[5]} ${af[6]}"
+		avb[1]=1	
+		avb[2]=1	
+		avb[3]=1	
+		avb[4]=1	
+		avb[5]=1	
+		avb[6]=1
+		###########################big cluster migration ##############3333
+		if [ ${af[1]} -eq 6 ] || [ ${af[1]} -eq 5 ] || [ ${af[1]} -eq 4 ]
+		then
+			avb[${af[1]}]=0
+		fi
+		if [ ${af[2]} -eq 6 ] || [ ${af[2]} -eq 5 ] || [ ${af[2]} -eq 4 ]
+		then
+			avb[${af[2]}]=0
+		fi
+		if [ ${af[3]} -eq 6 ] || [ ${af[3]} -eq 5 ] || [ ${af[3]} -eq 4 ]
+		then
+			avb[${af[3]}]=0
+		fi
+		##echo "ss0 ${avb[6]} ${avb[5]} ${avb[4]}"	
+		if [ ${af[1]} > 0 ] && [ ${eer[1]} != -100 ]
+		then
+			if [ ${af[1]} != 6 ] && [ ${af[1]} != 5 ] && [ ${af[1]} != 4 ]
+			then
+				target=-1
+				if [ ${avb[6]} -eq 1 ]
+				then
+					target=6
+					else if [ ${avb[5]} -eq 1 ]
+					then
+						target=5
+					else
+						target=4	
+					fi 
+				fi 
+				taskset -cp $target ${pidarr[1]}
+				af[1]=$target
+			fi
+			avb[${af[1]}]=0
+		fi	
+		##echo "ss1 ${avb[6]} ${avb[5]} ${avb[4]}"	
+		if [ ${af[2]} > 0 ]  && [ ${eer[2]} != -100 ]
+		then
+			if [ ${af[2]} != 6 ] && [ ${af[2]} != 5 ] && [ ${af[2]} != 4 ]
+			then
+				target=-1
+				if [ ${avb[6]} -eq 1 ]
+				then
+					target=6
+				else if [ ${avb[5]} -eq 1 ]
+					then
+						target=5
+					else
+						target=4
+					fi 	 
+				fi 
+				taskset -cp $target ${pidarr[2]}
+				af[2]=$target
+			fi
+			avb[${af[2]}]=0
+		fi	
+		##echo "ss2 ${avb[6]} ${avb[5]} ${avb[4]}"	
+		if [ ${af[3]} > 0 ] && [ ${eer[3]} != -100 ]
+		then
+			if [ ${af[3]} != 6 ] && [ ${af[3]} != 5 ] && [ ${af[3]} != 4 ]
+			then
+				target=-1
+				if [ ${avb[6]} -eq 1 ]
+				then
+					target=6
+				else if [ ${avb[5]} -eq 1 ]
+					then
+						target=5
+					else
+						target=4	
+					fi  
+				fi 
+				taskset -cp $target ${pidarr[3]}
+				af[3]=$target
+			fi
+			avb[${af[3]}]=0
+		fi	
+		##echo "ss3 ${avb[6]} ${avb[5]} ${avb[4]}"
+	###############################################33
+	###########################little cluster migration ##############3333
+		if [ ${af[4]} -eq 3 ] || [ ${af[4]} -eq 2 ] || [ ${af[4]} -eq 1 ]
+		then
+			avb[${af[4]}]=0
+		fi
+		if [ ${af[5]} -eq 3 ] || [ ${af[5]} -eq 2 ] || [ ${af[5]} -eq 1 ]
+		then
+			avb[${af[5]}]=0
+		fi
+		if [ ${af[6]} -eq 3 ] || [ ${af[6]} -eq 2 ] || [ ${af[6]} -eq 1 ]
+		then
+			avb[${af[6]}]=0
+		fi
+			
+		if [ ${af[4]} > 0 ] && [ ${eer[4]} != -100 ]
+		then
+			if [ ${af[4]} != 3 ] && [ ${af[4]} != 2 ] && [ ${af[4]} != 1 ]
+			then
+				target=-1
+				if [ ${avb[3]} -eq 1 ]
+				then
+					target=3
+				else if [ ${avb[2]} -eq 1 ]
+					then
+						target=2
+					else
+						target=1
+					fi 	 
+				fi 
+				taskset -cp $target ${pidarr[4]}
+				af[4]=$target
+			fi
+			avb[${af[4]}]=0
+		fi	
+			
+		if [ ${af[5]} > 0 ]  && [ ${eer[5]} != -100 ]
+		then
+			if [ ${af[5]} != 3 ] && [ ${af[5]} != 2 ] && [ ${af[5]} != 1 ]
+			then
+				target=-1
+				if [ ${avb[3]} -eq 1 ]
+				then
+					target=3
+				else if [ ${avb[2]} -eq 1 ]
+					then
+						target=2
+					else
+						target=1	
+					fi  
+				fi 
+				taskset -cp $target ${pidarr[5]}
+				af[5]=$target
+			fi
+			avb[${af[5]}]=0
+		fi		
+		if [ ${af[6]} > 0 ] && [ ${eer[6]} != -100 ]
+		then
+			if [ ${af[6]} != 3 ] && [ ${af[6]} != 2 ] && [ ${af[6]} != 1 ]
+			then
+				target=-1
+				if [ ${avb[3]} -eq 1 ]
+				then
+					target=3
+				else if [ ${avb[2]} -eq 1 ]
+					then
+						target=2
+					else
+						target=1	
+					fi  
+				fi 
+				taskset -cp $target ${pidarr[6]}
+				af[6]=$target
+			fi
+			avb[${af[6]}]=0
+		fi	
+		#######################################################
+
+
+		########################frequency####################################
+		if [ $pcnt -le 3 ] && [ $CPU4_FREQ -lt 2000 ]
+		then
+
+			echo 2000000 >/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
+
+			echo 2000000 >/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
+
+			echo 2000000 >/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
+
+			echo 2000000 >/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
+			echo 2000000 >/sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
+		fi
+		if [ $pcnt -gt 3 ]
+		then
+			previousst=1
+			uniformthresh=0.75
+			freqthreshold=1400
+
+			max=10
+			for i in `seq 1 $max`
+			do
+	
+				#echo $stprog
+
+				currentuniformity="$(./cluni $stprog)"
+				echo $currentuniformity
+				CPU4_FREQ=$((`cat /sys/devices/system/cpu/cpu7/cpufreq/scaling_cur_freq`/1000))
+			
+				echo "CPU4_FREQ $CPU4_FREQ"
+				lbratio="$(echo "scale=2; $freqthreshold/$CPU4_FREQ" | bc)"
+				#echo "lbratio=$lbratio"
+				if (( $(echo "$currentuniformity < $uniformthresh" |bc -l) )) && (( $(echo "$lbratio >= 1.1" |bc -l) )) 
+				then
+					currentst=1
+					elif (( $(echo "$currentuniformity >= $uniformthresh" |bc -l) )) && [ $CPU4_FREQ -le $freqthreshold ] && [ $previousst -lt 2 ]
+					then
+						currentst=2
+						elif (( $(echo "$currentuniformity < $uniformthresh" |bc -l) ))
+						then
+							currentst=3
+							elif (( $(echo "$currentuniformity >= $uniformthresh" |bc -l) )) && [ $CPU4_FREQ -gt $freqthreshold ]
+							then
+								currentst=4
+								elif (( $(echo "$currentuniformity >= $uniformthresh" |bc -l) )) && [ $CPU4_FREQ -le $freqthreshold ] && [ $previousst -gt 2 ]
+								then
+									currentst=5
+			
+				fi
+				CPU4_FREQnew=$CPU4_FREQ
+				if [ $currentst -eq 3 ] || [ $currentst -eq 4 ]
+				then
+					if [ $CPU4_FREQ -gt 200 ]
+					then
+						CPU4_FREQnew=$(( $CPU4_FREQ - 100 ))
+					fi
+					elif [ $currentst -eq 1 ] || [ $currentst -eq 2 ]
+					then
+					if [ $CPU4_FREQ -lt 2000 ]
+					then
+						CPU4_FREQnew=$(( $CPU4_FREQ + 100 )) 
+					fi
+				fi
+	
+				if [ $CPU4_FREQ -ne $CPU4_FREQnew ]
+				then
+				##echo "$CPU4_FREQ $CPU4_FREQnew"
+					CPU4_FREQnew=$(( $CPU4_FREQnew * 1000 )) 
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
+
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq		
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
+
+				
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
+	
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
+				echo $CPU4_FREQnew >/sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
+				fi
+	
+				previousst=$currentst
+				#echo "$currentuniformity $currentst $CPU4_FREQ $CPU4_FREQnew"
+		
+			
+
+			done
+		fi 
+		
+		###########################################################
+
+
+		A7_W=`cat /sys/bus/i2c/drivers/INA231/0-0045/sensor_W`
+		A15_W=`cat /sys/bus/i2c/drivers/INA231/0-0040/sensor_W`
+		prevedp=$curtedp
+		curtedp=$(($(date +%s%N)/1000000))		
+		curedp=$(echo "scale=2; $(echo "scale=2; $(( $curtedp-$prevedp ))/1000" | bc)*$(echo "scale=2; $A7_W+$A15_W" | bc)" | bc)
+		EDP=$(echo "scale=2; $EDP+$curedp" | bc)
+		sleep 1s
+		echo $pcnt
+	done
+	Energy=$EDP	
+	tlast=$(($(date +%s%N)/1000000))
+	totaldurationf="$(echo "scale=2; $(($(( $tlast - t0 ))))/1000" | bc)"
+	EDP="$(echo "scale=2; $totaldurationf * $Energy" | bc)"
+	pd0="$(echo "scale=2; $(( ${arrrt[1]} ))/$(( ${totaldur[1]} ))" | bc)"
+	pd1="$(echo "scale=2; $(( ${arrrt[2]} ))/$(( ${totaldur[2]} ))" | bc)"
+	pd2="$(echo "scale=2; $(( ${arrrt[3]} ))/$(( ${totaldur[3]} ))" | bc)"
+	pd3="$(echo "scale=2; $(( ${arrrt[4]} ))/$(( ${totaldur[4]} ))" | bc)"
+	pd4="$(echo "scale=2; $(( ${arrrt[5]} ))/$(( ${totaldur[5]} ))" | bc)"
+	pd5="$(echo "scale=2; $(( ${arrrt[6]} ))/$(( ${totaldur[6]} ))" | bc)"
+
+	uniformity="$(./cluni 6 $pd0 $pd1 $pd2 $pd3 $pd4 $pd5)"
+	echo " CEEF $cnt $EDP ${Energy} ${totaldurationf} $uniformity" >> salamioutput/rescmp7.log
+	cnt=$(( $cnt + 1 ))
+done
+
